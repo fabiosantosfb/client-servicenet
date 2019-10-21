@@ -3,9 +3,9 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.8.
 
 ## Requisitos Obrigatório na maquina de desenvolvimento com as versões atualizada
-node
-angular cli
-npm
+- node
+- angular cli
+- npm
 
 ## Rodar no ambiente de desenvolvimento ou testes
 - Entrar no diretório do projeto
