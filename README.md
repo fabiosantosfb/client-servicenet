@@ -2,6 +2,16 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.8.
 
+## Requisitos Obrigatório na maquina de desenvolvimento com as versões atualizada
+- node
+- angular cli
+- npm
+
+## Rodar no ambiente de desenvolvimento ou testes
+- Entrar no diretório do projeto
+  - npm install
+  - ng serve
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
