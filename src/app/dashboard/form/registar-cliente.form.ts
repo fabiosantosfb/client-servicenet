@@ -25,16 +25,16 @@ export class RegistarClienteForm extends FormGroup {
      * @param { ClienteInterface } cliente
      * @memberof RegistarClienteForm
      */
-    public populateValueEndereco(cliente: ClienteInterface): void {
-        this.get('cep').setValue(cliente.endereco.cep);
-        this.get('estado').setValue(cliente.endereco.estado);
-        this.get('cidade').setValue(cliente.endereco.cidade);
-        this.get('bairro').setValue(cliente.endereco.bairro);
-        this.get('logradouro').setValue(cliente.endereco.logradouro);
-        this.get('latitude').setValue(cliente.endereco.latitude);
-        this.get('longitude').setValue(cliente.endereco.longitude);
-        this.get('numero').setValue(cliente.endereco.numero);
-        this.get('pais').setValue(cliente.endereco.pais);
+    public populateValueEndereco(cliente: any, endereco: any): void {
+        this.get('cep').setValue(endereco.cep);
+        this.get('estado').setValue(endereco.estado);
+        this.get('cidade').setValue(endereco.cidade);
+        this.get('bairro').setValue(endereco.bairro);
+        this.get('logradouro').setValue(endereco.rua);
+        this.get('latitude').setValue(endereco.latitude);
+        this.get('longitude').setValue(endereco.longitude);
+        this.get('numero').setValue(endereco.numero);
+        this.get('pais').setValue(endereco.pais);
         this.get('nome').setValue(cliente.nome);
         this.get('telefone').setValue(cliente.telefone);
     }
@@ -56,7 +56,7 @@ export class RegistarClienteForm extends FormGroup {
         });
     }
 
-    public limpaDadosEndereco() {
+    public limpaDadosEndereco(): void {
         this.patchValue({
             cep:  '',
             estado: '',
@@ -67,6 +67,15 @@ export class RegistarClienteForm extends FormGroup {
             pais: '',
             complemento: ''
         });
+    }
+
+    public limpaDadosCliente(): void {
+        this.patchValue({
+            nome:  '',
+            telefone: ''
+        });
+
+        this.limpaDadosEndereco();
     }
 
     /**
@@ -100,14 +109,5 @@ export class RegistarClienteForm extends FormGroup {
         for (const controlName of Object.keys(this.controls)) {
             this.get(controlName).markAsTouched();
         }
-    }
-
-    /**
-     * Método responsável por verificar se um dado valor é válido
-     * @returns {boolean}
-     * @memberof RegistarClienteForm
-     */
-    public isValid(): boolean {
-        return this.valid;
     }
 }

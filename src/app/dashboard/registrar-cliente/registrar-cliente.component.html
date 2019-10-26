@@ -1,0 +1,170 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/listar-cliente">Listar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/registrar-cliente">Adicionar</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            Bem Vindo : {{user?.nome}}
+        </span>
+        <span class="navbar-text">
+            <a class="nav-link" (click)="logout()">sair</a>
+        </span>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 5em">
+    <form [formGroup]="this.registarClienteForm">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Cliente</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div [ngClass]="registarClienteForm.erroFormulario('nome')" class="form-group">
+                            <label>Nome*</label>
+                            <input type="text" class="form-control" formControlName="nome" placeholder="Nome ...">
+                            <label [hidden]="!registarClienteForm.validateCampo('nome')"><h6>Campo Obrigatório</h6></label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div [ngClass]="registarClienteForm.erroFormulario('telefone')" class="form-group">
+                            <label>Telefone*</label>
+                            <input type="text" [mask]="maskPhone" class="form-control" formControlName="telefone" placeholder="telefone ...">
+                            <label [hidden]="!registarClienteForm.validateCampo('telefone')"><h6>Campo Obrigatório</h6></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Endereço</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>CEP</label>
+                            <input type="text"
+                                   class="form-control"
+                                   formControlName="cep"
+                                   placeholder="Cep ..."
+                                   mask="brCep"
+                                   (blur)="consultaCepEndereco($event.target.value, template)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div [ngClass]="registarClienteForm.erroFormulario('estado')" class="form-group">
+                            <label>Estado*</label>
+                            <input type="text" class="form-control" formControlName="estado" placeholder="Estado ...">
+                            <label [hidden]="!registarClienteForm.validateCampo('estado')"><h6>Campo Obrigatório</h6></label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div [ngClass]="registarClienteForm.erroFormulario('cidade')" class="form-group">
+                            <label>Cidade*</label>
+                            <input type="text" class="form-control" formControlName="cidade" placeholder="Cidade ...">
+                            <label [hidden]="!registarClienteForm.validateCampo('cidade')"><h6>Campo Obrigatório</h6></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div [ngClass]="registarClienteForm.erroFormulario('bairro')" class="form-group">
+                            <label>Bairro*</label>
+                            <input type="text" class="form-control" formControlName="bairro" placeholder="Bairro ...">
+                            <label [hidden]="!registarClienteForm.validateCampo('bairro')"><h6>Campo Obrigatório</h6></label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div [ngClass]="registarClienteForm.erroFormulario('logradouro')" class="form-group">
+                            <label>Logradouro*</label>
+                            <input placeholder="Logradouro ..."
+                                   (keydown.enter)="$event.preventDefault()"
+                                   autocorrect="off"
+                                   autocapitalize="off"
+                                   spellcheck="off"
+                                   type="text"
+                                   class="form-control"
+                                   #search
+                                   formControlName="logradouro">
+                            <label [hidden]="!registarClienteForm.validateCampo('logradouro')"><h6>Campo Obrigatório, marque pendente</h6></label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div [ngClass]="registarClienteForm.erroFormulario('pais')" class="form-group">
+                            <label>Pais</label>
+                            <input type="text" class="form-control" formControlName="pais" placeholder="Pais ...">
+                            <label [hidden]="!registarClienteForm.validateCampo('pais')"><h6>Campo Obrigatório, marque pendente</h6></label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Numero</label>
+                            <input type="text"
+                                   class="form-control"
+                                   formControlName="numero"
+                                   placeholder="Número ..."
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box-footer">
+                            <button type="reset" class="btn btn-info pull-right" style="margin-right: 1em">Limpar</button>
+                            <button *ngIf="isEditar()" type="submit" class="btn btn-info pull-right" style="margin-right: 1em" (click)="salvarEditar(template)">Salvar Dados Editado</button>
+                            <button *ngIf="isRegistrar()" type="submit" class="btn btn-info pull-right" style="margin-right: 1em" (click)="salvarRegistro(template)">Registrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Localização</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box-header">
+                        <div class="box-body table-responsive no-padding">
+                            <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                                <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                            </agm-map>
+
+                            <!--<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">-->
+                            <!--<agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"-->
+                            <!--(dragEnd)="markerDragEnd($event)"></agm-marker>-->
+                            <!--</agm-map>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Atenção</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {{content}}
+    </div>
+</ng-template>

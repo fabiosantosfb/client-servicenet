@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/listar-cliente">Listar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/registrar-cliente">Adicionar</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            Bem Vindo : {{user?.nome}}
+        </span>
+        <span class="navbar-text">
+            <a class="nav-link" (click)="logout()">sair</a>
+        </span>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 5em">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Lista de Cliente</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Rua</th>
+                    <th>Bairro</th>
+                    <th>Cidade</th>
+                    <th>Estado</th>
+                    <th>Cep</th>
+                    <th>País</th>
+                    <th>Número</th>
+                    <th>Editar</th>
+                    <th>Remover</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let cliente of clientes let i = index" [attr.data-index]="i">
+                <tr>
+                    <td><span class="label bg-green">{{cliente.nome}}</span></td>
+                    <td><span class="label bg-green">{{cliente.telefone}}</span></td>
+                    <td><span class="label bg-green">{{cliente.rua}}</span></td>
+                    <td><span class="label bg-green">{{cliente.bairro}}</span></td>
+                    <td><span class="label bg-green">{{cliente.cidade}}</span></td>
+                    <td><span class="label bg-green">{{cliente.estado}}</span></td>
+                    <td><span class="label bg-green">{{cliente.cep}}</span></td>
+                    <td><span class="label bg-green">{{cliente.pais}}</span></td>
+                    <td><span class="label bg-green">{{cliente.numero}}</span></td>
+                    <td><span class="label bg-green"><i class="fa fa-edit" aria-hidden="true" (click)="editar(cliente)"></i></span></td>
+                    <td><span class="label bg-green"><i class="fa fa-trash" aria-hidden="true" (click)="remover(cliente, i)"></i></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
